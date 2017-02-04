@@ -10,9 +10,9 @@ function Plugin(config, stuff) {
 // plugin is expected to be compatible with...
 Plugin.prototype.sinopia_version = '1.1.0'
 
-Plugin.prototype.allow_access = function(user, package, cb) {
+Plugin.prototype.allow_access = function(user, pkg, cb) {
   var self = this
-  if (!package.handled_by_auth_plugin) {
+  if (!pkg.handled_by_auth_plugin) {
     // delegate to next plugin
     return cb(null, false)
   }
@@ -21,7 +21,7 @@ Plugin.prototype.allow_access = function(user, package, cb) {
     err.status = 403
     return cb(err)
   }
-  if (package.name !== self._config.to_access) {
+  if (pkg.name !== self._config.to_access) {
     var err = Error("you're not allowed here")
     err.status = 403
     return cb(err)
