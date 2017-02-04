@@ -1,5 +1,5 @@
 var assert   = require('assert')
-var validate = require('../../lib/utils').validate_name
+var validate = require('../../build/utils').validate_name
 
 describe('Validate', function() {
   it('good ones', function() {

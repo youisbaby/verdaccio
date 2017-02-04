@@ -8,7 +8,7 @@ describe('index-web.js app', test('index-web.js'))
 
 function test(file) {
   return function() {
-    var source = require('fs').readFileSync(__dirname + '/../../lib/' + file, 'utf8')
+    var source = require('fs').readFileSync(__dirname + '/../../build/' + file, 'utf8')
 
     var very_scary_regexp = /\n\s*app\.(\w+)\s*\(\s*(("[^"]*")|('[^']*'))\s*,/g
     var m

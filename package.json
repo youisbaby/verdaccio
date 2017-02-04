@@ -20,10 +20,10 @@
     "async": "^2.0.1",
     "body-parser": "^1.15.0",
     "bunyan": "^1.8.0",
+    "chalk": "^1.1.3",
     "commander": "^2.9.0",
     "compression": "^1.6.1",
     "cookies": "^0.6.1",
-    "es6-shim": "^0.35.0",
     "express": "^4.13.4",
     "handlebars": "^4.0.5",
     "highlight.js": "^9.3.0",
@@ -45,14 +45,13 @@
   "devDependencies": {
     "babel-cli": "^6.22.2",
     "babel-core": "^6.22.1",
-    "babel-plugin-syntax-async-functions": "^6.13.0",
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-es2016": "^6.22.0",
     "babel-preset-es2017": "^6.22.0",
     "bluebird": "^3.3.5",
     "browserify": "^13.0.0",
     "browserify-handlebars": "^1.0.0",
-    "eslint": "^2.9.0",
+    "eslint": "3.15.0",
     "grunt": "^1.0.1",
     "grunt-browserify": "^5.0.0",
     "grunt-cli": "^1.2.0",
@@ -75,15 +74,16 @@
     "server"
   ],
   "scripts": {
-    "compile": "babel lib/ --out-dir build/",
-    "test": "npm run lint && mocha ./test/functional ./test/unit",
+    "compile": "babel lib/ --out-dir build/ --copy-files",
+    "postinstall": "npm run compile",
+    "test": "npm run lint && npm run test:coverage",
     "test:coverage": "nyc --reporter=html --reporter=text mocha -R spec ./test/functional ./test/unit",
     "test-travis": "npm run lint && npm run test:coverage",
     "test-only": "mocha ./test/functional ./test/unit",
     "lint": "eslint ."
   },
   "engines": {
-    "node": ">=0.10"
+    "node": ">=4"
   },
   "preferGlobal": true,
   "publishConfig": {

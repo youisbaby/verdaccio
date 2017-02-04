@@ -1,4 +1,4 @@
-var ReadTarball = require('../../lib/streams').ReadTarballStream
+var ReadTarball = require('../../build/streams').ReadTarballStream
 
 describe('mystreams', function() {
   it('should delay events', function(cb) {

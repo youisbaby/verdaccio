@@ -1,5 +1,5 @@
 var assert = require('assert')
-var parse  = require('../../lib/utils').parse_address
+var parse  = require('../../build/utils').parse_address
 
 describe('Parse address', function() {
   function addTest(what, proto, host, port) {

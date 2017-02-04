@@ -1,7 +1,7 @@
 var assert      = require('assert')
-var tag_version = require('../../lib/utils').tag_version
+var tag_version = require('../../build/utils').tag_version
 
-require('../../lib/logger').setup([])
+require('../../build/logger').setup([])
 
 describe('tag_version', function() {
   it('add new one', function() {

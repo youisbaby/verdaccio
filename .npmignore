@@ -3,3 +3,6 @@ npm-debug.log
 verdaccio-*.tgz
 test-storage*
 /.*
+lib/
+test/
+coverage/
