@@ -13,6 +13,9 @@ env:
   node: true
   es6: true
 
+parserOptions:
+  sourceType: "module"
+
 rules:
   # useful to have in node.js,
   # if you're sure you don't need to handle error, rename it to "_err"
