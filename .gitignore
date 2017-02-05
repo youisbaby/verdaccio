@@ -4,7 +4,7 @@ verdaccio-*.tgz
 build/
 
 ###
-!bin/sinopia
+!bin/verdaccio
 test-storage*
 node_modules
 
