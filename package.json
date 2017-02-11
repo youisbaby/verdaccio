@@ -39,7 +39,7 @@
     "request": "^2.72.0",
     "semver": "^5.1.0",
     "symbol": "^0.2.1",
-    "verdaccio-plugin-auth-htpasswd": "0.0.1-beta"
+    "verdaccio-plugin-auth-htpasswd": "0.0.3-beta"
   },
   "devDependencies": {
     "babel-cli": "^6.22.2",
