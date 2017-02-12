@@ -1,6 +1,6 @@
 {
   "name": "verdaccio",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Private npm repository server",
   "author": {
     "name": "Alex Kocharin",
@@ -39,7 +39,7 @@
     "request": "^2.72.0",
     "semver": "^5.1.0",
     "symbol": "^0.2.1",
-    "verdaccio-plugin-auth-htpasswd": "0.0.3-beta"
+    "verdaccio-plugin-auth-htpasswd": "0.0.4"
   },
   "devDependencies": {
     "babel-cli": "^6.22.2",
