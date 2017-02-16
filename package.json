@@ -75,7 +75,7 @@
   ],
   "scripts": {
     "compile": "babel lib/ --out-dir build/ --copy-files",
-    "postinstall": "npm run compile",
+    "prepublish": "npm run compile",
     "test": "npm run lint && npm run test:coverage",
     "test:coverage": "nyc --reporter=html --reporter=text mocha -R spec ./test/functional ./test/unit",
     "test-travis": "npm run lint && npm run test:coverage",
