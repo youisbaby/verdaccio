@@ -17,10 +17,6 @@ coverage/
 .jshintrc
 jsconfig.json
 
-
-# Yarn
-yarn*
-
 # IDE
 .vscode/*
 .idea/
