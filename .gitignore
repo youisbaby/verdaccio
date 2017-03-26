@@ -8,6 +8,8 @@ build/
 test-storage*
 node_modules
 
+## Webpack Assets
+browser.js
 
 # Istanbul
 coverage/
