@@ -4,7 +4,7 @@
 
 🚀🚨🚨🚨🚨 **<--- Here we will have a fancy logo soon -->** 🚨🚨🚨🚨🚀
 
-You can vote 👍🏻👍🏻👍🏻 or contribute in [this thread](https://github.com/verdaccio/verdaccio/issues/237).
+You can vote 👍🏻👍🏻👍🏻 or contribute in [this thread](https://github.com/verdaccio/verdaccio/issues/328).
 
 ## Why should I use verdaccio?👌
 
