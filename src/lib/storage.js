@@ -8,10 +8,10 @@ const semver = require('semver');
 const Stream = require('stream');
 
 const Search = require('./search');
-const LocalStorage = require('./storage/local/local-storage');
 const Logger = require('./logger');
+const LocalStorage = require('./local-storage');
 const MyStreams = require('@verdaccio/streams');
-const Proxy = require('./storage/up-storage');
+const Proxy = require('./up-storage');
 const Utils = require('./utils');
 
 const WHITELIST = ['_rev', 'name', 'versions', 'dist-tags', 'readme', 'time'];
@@ -37,9 +37,6 @@ class Storage {
     this.config = config;
     this._setupUpLinks(this.config);
     this.localStorage = new LocalStorage(config, Logger.logger, Utils);
-    this.localStorage.localList.data.secret = this.config.checkSecretKey(this.localStorage.localList.data.secret);
-    this.localStorage.localList.sync();
-    // an instance for local storage
     this.logger = Logger.logger.child();
   }
 
@@ -61,7 +58,7 @@ class Storage {
      */
     const checkPackageLocal = () => {
       return new Promise((resolve, reject) => {
-        this.localStorage.getPackageMetadata(name, {}, (err, results) => {
+        this.localStorage.getPackageMetadata(name, (err, results) => {
           if (!_.isNil(err) && err.status !== 404) {
             return reject(err);
           }
@@ -171,7 +168,8 @@ class Storage {
    * @param {*} callback
    */
   replace_tags(name, tag_hash, callback) {
-    this.localStorage.replaceTags(name, tag_hash, callback);
+    this.logger.warn('method deprecated');
+    this.localStorage.mergeTags(name, tag_hash, callback);
   }
 
   /**
@@ -247,17 +245,17 @@ class Storage {
     // information about it, so fetching package info is unnecessary
 
     // trying local first
-    let rstream = self.localStorage.getTarball(name, filename);
+    let localStream = self.localStorage.getTarball(name, filename);
     let is_open = false;
-    rstream.on('error', function(err) {
+    localStream.on('error', (err) => {
       if (is_open || err.status !== 404) {
         return readStream.emit('error', err);
       }
 
       // local reported 404
       let err404 = err;
-      rstream.abort();
-      rstream = null; // gc
+      localStream.abort();
+      localStream = null; // gc
       self.localStorage.getPackageMetadata(name, (err, info) => {
         if (_.isNil(err) && info._distfiles && _.isNil(info._distfiles[filename]) === false) {
           // information about this file exists locally
@@ -276,12 +274,12 @@ class Storage {
         }
       });
     });
-    rstream.on('content-length', function(v) {
+    localStream.on('content-length', function(v) {
       readStream.emit('content-length', v);
     });
-    rstream.on('open', function() {
+    localStream.on('open', function() {
       is_open = true;
-      rstream.pipe(readStream);
+      localStream.pipe(readStream);
     });
     return readStream;
 
@@ -371,7 +369,7 @@ class Storage {
       callback = options, options = {};
     }
 
-    this.localStorage.getPackageMetadata(name, options, (err, data) => {
+    this.localStorage.getPackageMetadata(name, (err, data) => {
       if (err && (!err.status || err.status >= 500)) {
         // report internal errors right away
         return callback(err);
@@ -460,9 +458,9 @@ class Storage {
    * Retrieve only private local packages
    * @param {*} callback
    */
-  get_local(callback) {
+  getLocalDatabase(callback) {
     let self = this;
-    let locals = this.localStorage.localList.get();
+    let locals = this.localStorage.localData.get();
     let packages = [];
 
     const getPackage = function(i) {
@@ -505,7 +503,6 @@ class Storage {
     let exists = false;
     const self = this;
     const upLinks = [];
-
     if (_.isNil(packageInfo)) {
       exists = false;
       packageInfo = getDefaultMetadata(name);
@@ -584,7 +581,6 @@ class Storage {
       });
     }, (err, upLinksErrors) => {
       assert(!err && Array.isArray(upLinksErrors));
-
       if (!exists) {
         return callback( Error[404]('no such package available')
                       , null

@@ -6,7 +6,7 @@ const _ = require('lodash');
 const assert = require('assert');
 const exec = require('child_process').exec;
 
-describe('Create registry servers', function() {
+describe('functional test verdaccio', function() {
   const server = process.server;
   const server2 = process.server2;
   const server3 = process.server3;
@@ -18,6 +18,8 @@ describe('Create registry servers', function() {
       require('./lib/startup').start('./store/test-storage3', '/store/config-3.yaml'),
     ]).then(() => {
       done();
+    }).catch(function(error) {
+        console.error("error on start servers", error);
     });
 
   });
@@ -75,7 +77,7 @@ describe('Create registry servers', function() {
   require('./tags/addtag.spec')();
   require('./plugins/auth.spec')();
   require('./notifications/notify')();
-  // requires packages published to server1/server2
+  // // requires packages published to server1/server2
   require('./uplink.cache.spec')();
   require('./uplink.auth.spec')();
 
